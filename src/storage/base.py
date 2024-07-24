@@ -1,6 +1,8 @@
 from contextlib import asynccontextmanager
 from aiobotocore.session import get_session 
 
+from typing import Dict, List
+
 
 class S3Client:
     def __init__(
@@ -26,11 +28,26 @@ class S3Client:
     async def upload_file(
         self,
         file,
-        object_name: str
+        key: str
     ):
         async with self.create_client() as client:
             await client.put_object(
                 Bucket=self.bucket_name,
-                Key=object_name,
+                Key=key,
                 Body=file
+            )
+
+    async def get_file(self, key: str) -> Dict:
+        async with self.create_client() as client:
+            response = await client.get_object(
+                Bucket=self.bucket_name,
+                Key=key
+            )
+            return response
+
+    async def delete_file(self, key: str):
+        async with self.create_client() as client:
+            await client.delete_object(
+                Bucket=self.bucket_name,
+                Key=key
             )
