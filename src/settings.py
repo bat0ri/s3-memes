@@ -8,4 +8,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/gif"]
 
 # 5 MB максимум для загрузки мемов
-MAX_FILE_SIZE = 3 * 1024 * 1024
+MAX_FILE_SIZE = 5 * 1024 * 1024
+
+
+HOST = "0.0.0.0"
+PORT = 8000

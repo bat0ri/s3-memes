@@ -76,7 +76,7 @@ class AsyncRepository(AsyncBaseRepository):
     @transaction
     async def update(self, id, obj):
         query = sqlalchemy_update(self.entity).where(
-            self.entity.id == id
+            self.entity.oid == id
             ).values(**obj)
         await self.session.execute(query)
         await self.session.flush()

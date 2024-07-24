@@ -23,7 +23,7 @@ class Meme:
             content_size=self.content_size
         )
 
-    def __dict__(self):
+    def to_dict(self):
         return {
             "oid": self.oid,
             "title": self.title,
