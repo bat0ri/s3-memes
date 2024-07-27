@@ -39,6 +39,7 @@ def transaction(func):
     async def wrapper(self, *args, **kwargs):
         try:
             return await func(self, *args, **kwargs)
+            await self.session.commit()
         except Exception as e:
             await self.session.rollback()
             raise e
@@ -80,14 +81,14 @@ class AsyncRepository(AsyncBaseRepository):
             ).values(**obj)
         await self.session.execute(query)
         await self.session.flush()
-        return await self.get(id)
+        await self.session.refresh(obj)
+        return obj
 
     @transaction
     async def delete(self, id):
-        query = sqlalchemy_delete(self.entity).where(self.entity.id == id)
+        query = sqlalchemy_delete(self.entity).where(self.entity.oid == id)
         await self.session.execute(query)
-        await self.session.flush()
-        return True
+        await self.session.commit()
 
     @transaction
     async def drop(self):
