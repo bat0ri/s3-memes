@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 
 
 engine = create_async_engine(
-        url="postgresql+asyncpg://postgres:postgres@localhost:5425/postgres",
+        url="postgresql+asyncpg://postgres:postgres@db:5432/postgres",
         future=True,
         echo=True
 )
