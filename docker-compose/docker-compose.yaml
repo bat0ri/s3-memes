@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+
+  db:
+    image: postgres:alpine3.18
+    container_name: db_memes
+    restart: always
+    ports:
+      - "5425:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+
+  auth:
+    image: app
+    container_name: app
+    depends_on:
+      - db
+    build:
+      context: ../src/
+      dockerfile: Dockerfile
+    command: 'sh -c "alembic upgrade head && python main.py"'
