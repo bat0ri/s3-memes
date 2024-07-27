@@ -6,8 +6,6 @@ services:
     image: postgres:alpine3.18
     container_name: db_memes
     restart: always
-    ports:
-      - "5425:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -16,6 +14,8 @@ services:
   auth:
     image: app
     container_name: app
+    ports:
+      - "5000:8000"
     depends_on:
       - db
     build:
